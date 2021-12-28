@@ -11,6 +11,8 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 app = Flask("__main__")
 
+
+
 @app.route('/')
 def index():
     return render_template("home.html")
