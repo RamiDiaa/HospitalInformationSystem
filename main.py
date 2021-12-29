@@ -1,21 +1,18 @@
 from flask import Flask,render_template, request
 import mysql.connector
 
+app = Flask("__main__")
+
 mydb = mysql.connector.connect(
     host = 'localhost',
     user='root',
-    passwd = 'mysql',
-    database= 'MyPythonDatabase'
+    passwd = 'root',
+    database= 'sys',
+    auth_plugin='mysql_native_password'
 )
 
 mycursor = mydb.cursor()
-app = Flask("__main__")
 
-
-
-@app.route('/')
-def index():
-    return render_template("home.html")
 
 @app.route('/adddoctor',methods = ['POST','GET'])
 def AddDoctors():
@@ -30,6 +27,13 @@ def AddDoctors():
         return render_template("layout.html")
 
 
+@app.route('/')
+def index():
+    return render_template("layout.html")
+
+@app.route('/contactus')
+def contactus():
+    return render_template("contactus.html")
 
 
 if __name__ == '__main__':
