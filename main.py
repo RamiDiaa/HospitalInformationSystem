@@ -7,33 +7,44 @@ mydb = mysql.connector.connect(
     host = 'localhost',
     user='root',
     passwd = 'root',
-    database= 'sys',
+    database= 'icuroom',
     auth_plugin='mysql_native_password'
 )
 
 mycursor = mydb.cursor()
 
 
-@app.route('/adddoctor',methods = ['POST','GET'])
-def AddDoctors():
-    if request.method == 'POST':
-        name = request.form['name']
-        sql = "INSERT INTO  myDataBase (name) VALUES(%s)"
-        val = (name)
-        mycursor.execute(sql,val)
-
-        return render_template("layout.html")
-    else:
-        return render_template("layout.html")
 
 
 @app.route('/')
 def index():
     return render_template("layout.html")
 
-@app.route('/contactus')
+
+
+@app.route('/contactus',methods = ['POST','GET'])
 def contactus():
-    return render_template("contactus.html")
+    if request.method == 'POST':
+
+        email = request.form['email']
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        role = request.form['role']
+        ssn = request.form['ssn']
+        complainttext = request.form['complainttext']
+
+        sql = "insert into complaint (email,firstname,lastname,role,ssn,complainttext) values('%s','%s','%s','%s','%s','%s')" %(email,firstname,lastname,role,ssn,complainttext)
+        #sql = "insert into rol (role) values ('%s');" %(role)
+        #val=""
+        mycursor.execute(sql)
+        mydb.commit()
+        print(mydb)
+        return render_template("layout.html")
+    else:
+        return render_template("contactus.html")
+
+
+
 
 
 if __name__ == '__main__':

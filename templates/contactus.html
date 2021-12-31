@@ -2,40 +2,52 @@
 
 {% block body %}
 
-<div class="mx-auto" style="width: 800px;" >
+<div class="container"  >
 
-    <form class="row g-3">
+    <form class="row g-3" action="http://localhost:5000/contactus" method="POST">
       <div class="col-md-12">
         <label for="inputEmail4" class="form-label">Email</label>
-        <input type="email" class="form-control" id="inputEmail4">
+        <input type="email" class="form-control" id="inputEmail4" name="email" required>
       </div>
-      <div class="col-6">
+      <div class="col-4">
         <label for="inputAddress" class="form-label">First Name</label>
-        <input type="text" class="form-control" id="inputAddress">
+        <input type="text" class="form-control" id="inputAddress" name="firstname" required>
       </div>
-      <div class="col-6">
+      <div class="col-4">
         <label for="inputAddress" class="form-label">Last Name</label>
-        <input type="text" class="form-control" id="inputAddress1">
+        <input type="text" class="form-control" id="inputAddress1" name="lastname" required>
       </div>
       <div class="col-md-4">
         <label for="inputState" class="form-label">Role</label>
-        <select id="inputState" class="form-select">
-            <option selected>Admin</option>
+        <select id="inputState" class="form-select" name="role" required>
+            <option disabled>Admin</option>
             <option>Doctor</option>
             <option>Nurse</option>
             <option>Patient</option>
         </select>
       </div>
+      <div class="col-12">
+        <label for="inputAddress" class="form-label">Social Security Number</label>
+        <input type="text" class="form-control" id="inputAddress2" name="ssn" required>
+      </div>
+
+
+
+
       <div class="col-md-12">
             <label for="exampleFormControlTextarea1" class="form-label">Complaint</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="complainttext" required></textarea>
       </div>
+
+
 
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
-
+    <div class="col-12">
+        <a href="https://www.facebook.com/egypt.mohp" class="link-primary">or contact us on facebook</a>
+    </div>
 </div>
 
 
