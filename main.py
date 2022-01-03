@@ -22,6 +22,65 @@ def index():
 
 
 
+
+
+
+
+@app.route('/viewdoctor')
+def viewdoctors():
+      mycursor.execute("SELECT * FROM DOCTORS")
+      row_headers=[x[0] for x in mycursor.description]
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+      }
+      return render_template('viewdoctors.html',msg=data)
+
+@app.route('/viewequipment')
+def viewequipment():
+      mycursor.execute("SELECT * FROM EQUIPMENT")
+      row_headers=[x[0] for x in mycursor.description]
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+      }
+      return render_template('viewequipment.html',msg=data)
+
+@app.route('/viewnurses')
+def viewnurses():
+      mycursor.execute("SELECT * FROM NURSES")
+      row_headers=[x[0] for x in mycursor.description]
+      myresult = mycursor.fetchall()
+      data={
+         'message':"data retrieved",
+         'rec':myresult,
+         'header':row_headers
+      }
+      return render_template('viewnurses.html',msg=data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/contactus',methods = ['POST','GET'])
 def contactus():
     if request.method == 'POST':
