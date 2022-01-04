@@ -1,0 +1,48 @@
+
+
+{% extends "layout.html" %}
+{% block body %}
+<form action="http://localhost:5000/adddependent" method="POST">
+<div class="container">
+<div class="row">
+  <div class="col">
+    <input type="text" class="form-control" placeholder="Dname" aria-label="Dname" name="Dname" required>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col">
+    <input type="text" class="form-control" placeholder="relationship" aria-label="relationship" name="relationship" required>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+    <input type="number" class="form-control" placeholder="age" aria-label="age" name="age" required>
+    </div>
+
+</div>
+<div class="row">
+  <div class="col">
+    <input type="number" class="form-control" placeholder="phone" aria-label="phone" name="phone" required>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col">
+    <input type="text" class="form-control" placeholder="gender" aria-label="gender" name="gender" required>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <input type="number" class="form-control" placeholder="PSSN" aria-label="PSSN" name="PSSN" required>
+  </div>
+   
+
+        <input type="submit" value="Submit">
+</div>        
+      </form> 
+
+      {% endblock %}

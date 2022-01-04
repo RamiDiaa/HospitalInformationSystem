@@ -1,0 +1,43 @@
+
+
+{% extends "layout.html" %}
+{% block body %}
+<div class="container">
+
+<form action="http://localhost:5000/addequipment" method="POST">
+<div class="container">
+<div class="row">
+  <div class="col">
+    <input type="number" class="form-control" placeholder="code" aria-label="code" name="code" required>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col">
+    <input type="text" class="form-control" placeholder="manufacturer" aria-label="manufacturer" name="manufacturer" required>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <input type="text" class="form-control" placeholder="Ename" aria-label="Ename" name="Ename" required>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col">
+    <input type="number" class="form-control" placeholder="Emodel" aria-label="Emodel" name="Emodel" required>
+    </div>
+
+</div>
+
+<div class="row">
+  <div class="col">
+    <input type="number" class="form-control" placeholder="PSSN" aria-label="PSSN" name="PSSN" required>
+  </div>
+ 
+        <input type="submit" value="Submit">
+</div>
+      </form> 
+    
+      {% endblock %}

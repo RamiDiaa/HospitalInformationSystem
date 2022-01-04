@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <title> ADD-Room </title>
+    <h1> &nbsp; &nbsp; &nbsp; &nbsp; <div class="badge bg-primary text-wrap" style="width: 13rem;">
+        Add a room
+      </div> </h1>
+    <br>
+<form action="http://127.0.0.1:5000/addroom" method="POST">
+    <div class="mb-3">
+        &nbsp; <label for="formGroupExampleInput" class="form-label">Room Number</label>
+        &nbsp;<input type="text" class="form-control" id="formGroupExampleInput" name="room Number" placeholder="Add room number">
+    </div>
+    <div class="mb-3">
+        &nbsp; <label for="formGroupExampleInput2" class="form-label">Room Name</label>
+        &nbsp; <input type="text" class="form-control" id="formGroupExampleInput2" name="room Name" placeholder="Add a room name">
+    </div>
+    <div class="mb-3">
+        &nbsp; <label for="formGroupExampleInput2" class="form-label">Floor NO.</label>
+        &nbsp;<input type="text" class="form-control" id="formGroupExampleInput2" name="floor Number" placeholder="Add a floor number">
+    </div>
+     <br><br>
+    <div class="col-12">
+        &nbsp;&nbsp; &nbsp;  <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form> 
+{% endblock %}

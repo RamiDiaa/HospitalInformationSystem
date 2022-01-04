@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block body %}
+    <title> ADD-Patient </title>
+
+    <h1> &nbsp; &nbsp; &nbsp; &nbsp; <div class="badge bg-primary text-wrap" style="width: 15rem;">
+        Add a patient</div> 
+    </h1>
+    <br>
+    <form class="row g-3", action="http://127.0.0.1:5000/addpatient" method="POST">
+        <div class="col-md-5">
+            &nbsp;&nbsp; <label for="inputEmail4" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="inputEmail4" name="Patient First Name">
+        </div>
+        <div class="col-md-5">
+            <label for="inputPassword4" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="inputPassword4" name="Patient Last Name">
+        </div>
+        <div class="col-md-3">
+            &nbsp;&nbsp; <label for="inputZip" class="form-label">Patient SSN</label>
+            <input type="number" class="form-control" id="inputZip" name="Pateint SSN">
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Age</label>
+            <input type="number" class="form-control" id="inputZip" name="Patient Age">
+        </div>
+        <div class="col-md-3">
+            <label for="inputState" class="form-label">Gender</label>
+            <select id="inputState" class="form-select" name="Patient Gender">
+              <option selected>Choose...</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="inputZip" name="Patient Phone">
+        </div>
+        <div class="col-12">
+            &nbsp;&nbsp; <label for="inputAddress" class="form-label">Address</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="Patient Address">
+        </div>
+        <div class="col-12">
+            &nbsp;&nbsp; <label for="inputAddress" class="form-label">Patient Disease</label>
+            <input type="text" class="form-control" id="inputAddress" name="Patient Disease">
+        </div>
+        <div class="col-12">
+            &nbsp;&nbsp; <label for="inputAddress" class="form-label">Patient Medicine</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="Ex:Enalapril.." name="Patient Medicine">
+        </div>
+        <div class="col-md-3">
+            &nbsp;&nbsp; <label for="inputZip" class="form-label">Doctor SSN</label>
+            <input type="number" class="form-control" id="inputZip" name="SSNDoctor">
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Nurse SSN</label>
+            <input type="number" class="form-control" id="inputZip" name="SSNNurse">
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Room NO.</label>
+            <input type="number" class="form-control" id="inputZip" name="NORoom">
+        </div>
+       <br><br>
+       <div class="col-12">
+        &nbsp;&nbsp; &nbsp;  <button type="submit" class="btn btn-primary">Submit</button>
+       </div>
+       
+    </form> 
+{% endblock %}
