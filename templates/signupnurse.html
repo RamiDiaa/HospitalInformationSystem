@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<form action="http://localhost:5000/signupnurse" method="POST">
+    <div class="container">
+    <div class="row">
+      <div class="col1">
+        <input type="text" class="form-control" placeholder="Fname" aria-label="Fname" name="Fname" required>
+      </div>
+      <div class="col2">
+        <input type="text" class="form-control" placeholder="Lname" aria-label="Lname" name="Lname" required>
+      </div>
+      <div class="col3">
+        <input type="text" class="form-control" placeholder="gender" aria-label="gender" name="gender" required>
+    </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="col1">
+            <input type="number" class="form-control" placeholder="age" aria-label="age" name="age" required>
+        </div>
+      <div class="col2">
+        <input type="text" class="form-control" placeholder="address" aria-label="address" name="address" required>
+      </div>
+      <div class="col3">
+        <input type="number" class="form-control" placeholder="phone" aria-label="phone" name="phone" required>
+      </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col1">
+            <input type="number" class="form-control" placeholder="NSSN" aria-label="NSSN" name="NSSN" required>
+        </div>
+        <div class="col2">
+          <input type="number" class="form-control" placeholder="DSSN" aria-label="Nurse Supervisor" name="Nurse Supervisor" required>
+        </div>
+        
+      </div>
+    
+    <div class="row">
+
+        <div class="col1">
+            <input type="number" class="form-control" placeholder="salary" aria-label="salary" name="salary" required>
+        </div>
+        <div class="col2">
+            <input type="number" class="form-control" placeholder="CareRoom" aria-label="CareRoom" name="CareRoom" required>
+        </div>
+    
+    </div>
+    
+
+    <div class="row">
+        <div class="col1">
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="Username" required>
+        </div>
+        <div class="col2">
+            <input type="text" class="form-control" placeholder="Password" aria-label="Password" name="Password" required>
+        </div>
+    
+    </div>
+        
+            <input type="submit" value="Submit">
+    </div>
+          </form> 
+        
+          {% endblock %}
+    

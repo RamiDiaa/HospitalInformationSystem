@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1>Rooms</h1>
+<table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        {% for rh in msg.header %}
+        <th scope="col">{{ rh }}</th>
+        {% endfor %} 
+      </tr>
+    </thead>
+    <tbody>
+       {% for d in msg.rec %}
+       <tr>
+          <th scope="row">{{ loop.index }} </th>
+          {% for td in d%}
+            <td> {{ td }}</td>
+          {% endfor %}
+       </tr>
+       {% endfor %}
+      </tbody>
+  </table>
+  
+
+
+{% endblock %}

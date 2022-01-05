@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!--
+<form action="http://127.0.0.1:5000/signup" method="POST">
+    <div class="container" align="middle">
+    <div class="col-md-4">
+        <label for="inputState" class="form-label">Role</label>
+        <select id="inputState" class="form-select" name="role" required>
+            <a value="admin" herf ="http://127.0.0.1:5000/" disabled>Admin</a>
+            <a value="doctor" herf ="http://127.0.0.1:5000/">Doctor</a>
+            <a value="nurse" herf ="http://127.0.0.1:5000/">Nurse</a>
+            <a value="patient" herf ="http://127.0.0.1:5000/">Patient</a>
+        </select>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+
+    </div>
+</form>
+
+-->
+
+<div class="container" align="middle">
+ <div class="col-md-12">
+    <a type="button" class="btn btn-warning" href="http://127.0.0.1:5000/signupdoctor">Sign-up for doctors</a>
+    <a type="button" class="btn btn-warning" href="http://127.0.0.1:5000/signuppatient">Sign-up for patients</a>
+    <a type="button" class="btn btn-warning" href="http://127.0.0.1:5000/signupnurse">Sign-up for nurses</a>
+ </div>
+</div>
+ {% endblock %}

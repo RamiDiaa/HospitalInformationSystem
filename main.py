@@ -13,47 +13,241 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
+username =""
+role=""
+
+@app.route('/login',methods = ['POST','GET'])
+def login():
+    if request.method == "POST":
+        user_name = request.form['username']
+        password = request.form['password']
+
+
+        global username
+        global role
+        username =""
+        role=""
+
+        if user_name == "admin" and password == "admin":
+            role = "admin"
+            username = user_name
+            return render_template("home.html")
+
+
+        mycursor.execute("SELECT dssn FROM doctor WHERE username=%s AND  password=%s ", (user_name, password,))
+        result = mycursor.fetchall()
+        if result:
+            role = "doctor"
+            username = user_name
+            return render_template("home.html")
+
+        mycursor.execute("SELECT nur_ssn FROM nurse WHERE username=%s AND  password=%s ", (user_name, password,))
+        result = mycursor.fetchall()
+        if result:
+            role = "nurse"
+            username = user_name
+            return render_template("home.html")
+
+        mycursor.execute("SELECT pat_ssn FROM patient WHERE username=%s AND  password=%s ", (user_name, password,))
+        result = mycursor.fetchall()
+        if result:
+            role = "patient"
+            username = user_name
+            return render_template("home.html")
+
+    return render_template("login.html")
+
+    return render_template("home.html")
+
+
+    return render_template('login.html')
+
+
+@app.route('/signup',methods = ['POST', 'GET'])
+def signup():
+    if request.method == "POST":
+        role = request.form['role']
+        if role == "doctor":
+            return render_template("signupdoctor.html")
+
+    return render_template("signup.html")
+
+
+
+@app.route('/signupdoctor',methods = ['POST', 'GET'])
+def signupdoctor():
+   if request.method == 'POST':
+      Fname = request.form['Fname']
+      Lname = request.form['Lname']
+      address = request.form['address']
+      age = request.form['age']
+      salary = request.form['salary']
+      phone = request.form['phone']
+      gender = request.form['gender']
+      DSSN = request.form['DSSN']
+      RNum = request.form['RNum']
+      Username = request.form['Username']
+      Password = request.form['Password']
+      print(Fname,Lname,address,age,salary,phone,gender,DSSN,RNum,Username,Password)
+      sql = "INSERT INTO doctor (Fname,Lname,address,age,salary,phone,gender,DSSN,RNum,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      val = (Fname,Lname,address,age,salary,phone,gender,DSSN,RNum,Username,Password)
+      mycursor.execute(sql,val)
+      mydb.commit()
+      return render_template('home.html')
+   else:
+        return render_template('signupdoctor.html')
+
+
+@app.route('/Signupnurse',methods = ['POST', 'GET'])
+def Signupnurse():
+   if request.method == 'POST':
+      Fname = request.form['Fname']
+      Lname = request.form['Lname']
+      address = request.form['address']
+      age = request.form['age']
+      salary = request.form['salary']
+      CareRoom = request.form['CareRoom']
+      phone = request.form['phone']
+      gender = request.form['gender']
+      DSSN = request.form['DSSN']
+      NSSN = request.form['NSSN']
+      Username = request.form['Username']
+      Password = request.form['Password']
+      print(Fname,Lname,address,age,salary,CareRoom,phone,gender,DSSN,NSSN,Username,Password)
+      sql = "INSERT INTO Signupnurse (Fname,Lname,address,age,salary,CareRoom,phone,gender,DSSN,NSSN,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      val = (Fname,Lname,address,age,salary,CareRoom,phone,gender,DSSN,NSSN,Username,Password)
+      mycursor.execute(sql,val)
+      mydb.commit()
+      return render_template('home.html')
+   else:
+        return render_template('Signupnurse.html')
+@app.route('/Signuppatient',methods = ['POST', 'GET'])
+def Signuppatient():
+   if request.method == 'POST':
+      Fname = request.form['Fname']
+      Lname = request.form['Lname']
+      address = request.form['address']
+      age = request.form['age']
+      salary = request.form['salary']
+      phone = request.form['phone']
+      gender = request.form['gender']
+      DSSN = request.form['DSSN']
+      PSSN = request.form['PSSN']
+      NSSN = request.form['NSSN']
+      RNum = request.form['RNum']
+      Medicine = request.form['Medicine']
+      Disease = request.form['Disease']
+      Username = request.form['Username']
+      Password = request.form['Password']
+      print(Fname,Lname,address,age,salary,phone,gender,DSSN,PSSN,RNum,NSSN,Medicine,Disease,Username,Password)
+      sql = "INSERT INTO Signuppatient (Fname,Lname,address,age,salary,phone,gender,DSSN,PSSN,RNum,NSSN,Medicine,Disease,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      val = (Fname,Lname,address,age,salary,phone,gender,DSSN,PSSN,RNum,NSSN,Medicine,Disease,Username,Password)
+      mycursor.execute(sql,val)
+      mydb.commit()
+      return render_template('layout.html')
+   else:
+        return render_template('Signuppatient.html')
+
+
+
 
 
 
 @app.route('/',methods = ['POST', 'GET'])
 def home():
+    if role == "":
+        return render_template('login.html')
     return render_template("home.html")
 @app.route('/viewdoctor')
 def viewdoctors():
-      mycursor.execute("SELECT * FROM DOCTORS")
-      row_headers=[x[0] for x in mycursor.description]
-      myresult = mycursor.fetchall()
-      data={
-         'message':"data retrieved",
-         'rec':myresult,
-         'header':row_headers
-      }
-      return render_template('viewdoctor.html',msg=data)
+    if role != "admin":
+        return render_template('login.html')
+    mycursor.execute("SELECT * FROM DOCTORS")
+    row_headers=[x[0] for x in mycursor.description]
+    myresult = mycursor.fetchall()
+    data={
+     'message':"data retrieved",
+     'rec':myresult,
+     'header':row_headers
+    }
+    return render_template('viewdoctor.html',msg=data)
 
 @app.route('/viewequipment')
 def viewequipment():
-      mycursor.execute("SELECT * FROM EQUIPMENT")
-      row_headers=[x[0] for x in mycursor.description]
-      myresult = mycursor.fetchall()
-      data={
-         'message':"data retrieved",
-         'rec':myresult,
-         'header':row_headers
-      }
-      return render_template('viewequipment.html',msg=data)
+    if role != "admin":
+        return render_template('login.html')
+    mycursor.execute("SELECT * FROM EQUIPMENT")
+    row_headers=[x[0] for x in mycursor.description]
+    myresult = mycursor.fetchall()
+    data={
+     'message':"data retrieved",
+     'rec':myresult,
+     'header':row_headers
+    }
+    return render_template('viewequipment.html',msg=data)
 
-@app.route('/viewnurses')
-def viewnurses():
-      mycursor.execute("SELECT * FROM NURSES")
-      row_headers=[x[0] for x in mycursor.description]
-      myresult = mycursor.fetchall()
-      data={
-         'message':"data retrieved",
-         'rec':myresult,
-         'header':row_headers
-      }
-      return render_template('viewnurse.html',msg=data)
+@app.route('/viewnurse')
+def viewnurse():
+    if role != "admin":
+        return render_template('login.html')
+    mycursor.execute("SELECT * FROM NURSE")
+    row_headers=[x[0] for x in mycursor.description]
+    myresult = mycursor.fetchall()
+    data={
+     'message':"data retrieved",
+     'rec':myresult,
+     'header':row_headers
+    }
+    return render_template('viewnurse.html',msg=data)
+
+
+
+
+
+
+@app.route('/viewpatient')
+def viewpatient():
+    if role != "admin":
+        return render_template('login.html')
+    mycursor.execute("SELECT * FROM PATIENT")
+    row_headers=[x[0] for x in mycursor.description]
+    myresult = mycursor.fetchall()
+    data={
+     'message':"data retrieved",
+     'rec':myresult,
+     'header':row_headers
+    }
+    return render_template('viewpatient.html',msg=data)
+
+@app.route('/viewdependent')
+def viewdependent():
+    if role != "admin":
+        return render_template('login.html')
+    mycursor.execute("SELECT * FROM DEPENDENT")
+    row_headers=[x[0] for x in mycursor.description]
+    myresult = mycursor.fetchall()
+    data={
+     'message':"data retrieved",
+     'rec':myresult,
+     'header':row_headers
+    }
+    return render_template('viewdependent.html',msg=data)
+
+@app.route('/viewroom')
+def viewroom():
+    if role != "admin":
+        return render_template('login.html')
+    mycursor.execute("SELECT * FROM ROOM")
+    row_headers=[x[0] for x in mycursor.description]
+    myresult = mycursor.fetchall()
+    data={
+     'message':"data retrieved",
+     'rec':myresult,
+     'header':row_headers
+    }
+    return render_template('viewroom.html',msg=data)
+
+
 
 
 ####### add
@@ -69,14 +263,16 @@ def adddoctor():
       gender = request.form['gender']
       DSSN = request.form['DSSN']
       RNum = request.form['RNum']
+      salary = request.form['salary']
       print(Fname,Lname,address,age,phone,gender,DSSN,RNum)
-      sql = "INSERT INTO doctors (Fname,Lname,address,age,phone,gender,DSSN,RNum) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-      val = (Fname,Lname,address,age,phone,gender,DSSN,RNum)
+      sql = "INSERT INTO doctor (Fname,Lname,address,age,phone,gender,DSSN,RNum,salary) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      val = (Fname,Lname,address,age,phone,gender,DSSN,RNum,salary)
       mycursor.execute(sql,val)
       mydb.commit()
       return render_template('home.html')
-   else:
-      return render_template('adddoctor.html')
+   if role != "doctor" and role !="admin":
+       return render_template('login.html')
+   return render_template('adddoctor.html')
 @app.route('/addequipment',methods = ['POST', 'GET'])
 def addeqipment():
    if request.method == 'POST':
@@ -91,8 +287,9 @@ def addeqipment():
       mycursor.execute(sql, val)
       mydb.commit()
       return render_template('home.html')
-   else:
-      return render_template('addequipment.html')
+   if role != "doctor" and role !="admin":
+       return render_template('login.html')
+   return render_template('addequipment.html')
 @app.route('/adddependent',methods = ['POST', 'GET'])
 def adddependent():
    if request.method == 'POST':
@@ -108,8 +305,9 @@ def adddependent():
       mycursor.execute(sql, val)
       mydb.commit()
       return render_template('home.html')
-   else:
-      return render_template('adddependent.html')
+   if role != "doctor" and role !="admin":
+        return render_template('login.html')
+   return render_template('adddependent.html')
 
 ###
 
@@ -135,6 +333,8 @@ def addpatient():
         mydb.commit()
         return render_template('home.html')
     else:
+        if role != "doctor" and role != "admin" and role != "nurse" and role != "patient":
+            return render_template('login.html')
         return render_template('addpatient.html')
 #start of addnurse
 @app.route('/addnurse', methods=['POST', 'GET'])
@@ -157,6 +357,8 @@ def addnurse():
         mydb.commit()
         return render_template('home.html')
     else:
+        if role != "doctor" and role != "admin" and role != "nurse":
+            return render_template('login.html')
         return render_template('addnurse.html')
 @app.route('/addroom', methods=['POST', 'GET'])
 def addroom():
@@ -171,26 +373,12 @@ def addroom():
         mydb.commit()
         return render_template('home.html')
     else:
+        if role != "nurse" and role != "admin":
+            return render_template('login.html')
         return render_template('addroom.html')
 
 
 ######
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @app.route('/contactus',methods = ['POST','GET'])
 def contactus():

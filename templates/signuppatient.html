@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<form action="http://localhost:5000/signuppatient" method="POST">
+    <div class="container">
+    <div class="row">
+      <div class="col1">
+        <input type="text" class="form-control" placeholder="Fname" aria-label="Fname" name="Fname" required>
+      </div>
+      <div class="col2">
+        <input type="text" class="form-control" placeholder="Lname" aria-label="Lname" name="Lname" required>
+      </div>
+      <div class="col3">
+        <input type="text" class="form-control" placeholder="gender" aria-label="gender" name="gender" required>
+    </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="col1">
+            <input type="number" class="form-control" placeholder="age" aria-label="age" name="age" required>
+        </div>
+      <div class="col2">
+        <input type="text" class="form-control" placeholder="address" aria-label="address" name="address" required>
+      </div>
+      <div class="col3">
+        <input type="number" class="form-control" placeholder="phone" aria-label="phone" name="phone" required>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col1">
+          <input type="number" class="form-control" placeholder="DSSN" aria-label="DSSN" name="DSSN" required>
+        </div>
+        <div class="col2">
+            <input type="number" class="form-control" placeholder="PSSN" aria-label="PSSN" name="PSSN" required>
+        </div>
+        <div class="col3">
+            <input type="number" class="form-control" placeholder="NSSN" aria-label="NSSN" name="NSSN" required>
+        </div>
+      </div>
+    
+    <div class="row">
+        <div class="col1">
+            <input type="number" class="form-control" placeholder="RNum" aria-label="RNum" name="RNum" required>
+        </div>
+
+        <div class="col2">
+            <input type="text" class="form-control" placeholder="Disease" aria-label="Disease" name="Disease" required>
+        </div>
+        <div class="col3">
+            <input type="text" class="form-control" placeholder="Medicine" aria-label="Medicine" name="Medicine" required>
+        </div>
+    
+    </div>
+    
+
+    <div class="row">
+        <div class="col1">
+        <input type="text" class="form-control" placeholder="Email address" aria-label="Username" name="Username" required>
+        </div>
+        <div class="col2">
+            <input type="text" class="form-control" placeholder="Password" aria-label="Password" name="Password" required>
+        </div>
+    
+    </div>
+        
+            <input type="submit" value="Submit">
+    </div>
+          </form> 
+        
+          {% endblock %}
+    
