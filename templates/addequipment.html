@@ -1,43 +1,40 @@
-
-
 {% extends "layout.html" %}
+
 {% block body %}
-<div class="container">
-
-<form action="http://localhost:5000/addequipment" method="POST">
-<div class="container">
-<div class="row">
-  <div class="col">
-    <input type="number" class="form-control" placeholder="code" aria-label="code" name="code" required>
-  </div>
-</div>
-
-<div class="row">
-    <div class="col">
-    <input type="text" class="form-control" placeholder="manufacturer" aria-label="manufacturer" name="manufacturer" required>
+    <title> ADD-EQUIPMENT </title>
+    <h1> &nbsp; &nbsp; &nbsp; &nbsp; <div class="badge bg-primary text-wrap" style="width: 13rem;">
+        Add an equipment
+      </div> </h1>
+    <br>
+<form action="http://127.0.0.1:5000/addequipment" method="POST">
+    <div class="mb-3">
+        &nbsp; <label for="formGroupExampleInput" class="form-label">Equipment Model</label>
+        &nbsp;<input type="text" class="form-control" id="formGroupExampleInput" name="Emodel" placeholder="Add an Add an Equipment Model">
     </div>
-</div>
-
-<div class="row">
-  <div class="col">
-    <input type="text" class="form-control" placeholder="Ename" aria-label="Ename" name="Ename" required>
-  </div>
-</div>
-
-<div class="row">
-    <div class="col">
-    <input type="number" class="form-control" placeholder="Emodel" aria-label="Emodel" name="Emodel" required>
+    <div class="mb-3">
+        &nbsp; <label for="formGroupExampleInput2" class="form-label">Equipment Name</label>
+        &nbsp; <input type="text" class="form-control" id="formGroupExampleInput2" name="Ename" placeholder="Add an Equipment Name">
     </div>
-
-</div>
-
-<div class="row">
-  <div class="col">
-    <input type="number" class="form-control" placeholder="PSSN" aria-label="PSSN" name="PSSN" required>
+    <div class="mb-3">
+      &nbsp; <label for="formGroupExampleInput" class="form-label">Equipment Code</label>
+      &nbsp;<input type="text" class="form-control" id="formGroupExampleInput" name="code" placeholder="Add a code">
   </div>
- 
-        <input type="submit" value="Submit">
+  <div class="mb-3">
+    &nbsp;&nbsp; <label for="formGroupExampleInput2" class="form-label">Patient SSN</label>
+    <input type="number" class="form-control" id="formGroupExampleInput2" name="PSSN" placeholder="Add a Patient SSN">
 </div>
-      </form> 
-    
-      {% endblock %}
+    <div class="mb-3">
+        &nbsp; <label for="formGroupExampleInput2" class="form-label">Manufacturer</label>
+        &nbsp;<input type="text" class="form-control" id="formGroupExampleInput2" name="manufacturer" placeholder="Add a manufacturer">
+    </div>
+     <br><br>
+    <div class="col-12">
+        &nbsp;&nbsp; &nbsp;  <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form> 
+{% endblock %}
+
+
+
+
+

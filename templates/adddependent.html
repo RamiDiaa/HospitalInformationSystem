@@ -1,48 +1,57 @@
-
-
 {% extends "layout.html" %}
+
 {% block body %}
-<form action="http://localhost:5000/adddependent" method="POST">
-<div class="container">
-<div class="row">
-  <div class="col">
-    <input type="text" class="form-control" placeholder="Dname" aria-label="Dname" name="Dname" required>
-  </div>
-</div>
 
-<div class="row">
-    <div class="col">
-    <input type="text" class="form-control" placeholder="relationship" aria-label="relationship" name="relationship" required>
+    <title> ADD-DEPENDENT</title>
+
+    <h1> &nbsp; &nbsp; &nbsp; &nbsp; <div class="badge bg-primary text-wrap" style="width: 15rem;">
+        Add a dependent</div> 
+    </h1>
+    <br>
+    <form class="row g-3", action="http://127.0.0.1:5000/adddependent" method="POST">
+        <div class="col-md-5">
+            <label for="inputPassword4" class="form-label">Dependent Name</label>
+            <input type="text" class="form-control" id="inputPassword4" name="Dname">
+        </div>
+        <div class="col-md-5">
+          <label for="inputPassword4" class="form-label">Relationship</label>
+          <input type="text" class="form-control" id="inputPassword4" name="relationship">
+      </div>
+      <div class="col-md-3">
+        &nbsp;&nbsp; <label for="inputZip" class="form-label">Patient SSN</label>
+        <input type="number" class="form-control" id="inputZip" name="PSSN">
     </div>
-</div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Age</label>
+            <input type="number" class="form-control" id="inputZip" name="age">
+        </div>
+        <div class="col-md-3">
+            <label for="inputState" class="form-label">Gender</label>
+            <select id="inputState" class="form-select" name="gender">
+              <option selected>Choose...</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="inputZip" name="phone">
+        </div>
+       <br><br>
+       <div class="col-12">
+        &nbsp;&nbsp; &nbsp;  <button type="submit" class="btn btn-primary">Submit</button>
+       </div>
+    </form> 
+{% endblock %}
 
 
-<div class="row">
-    <div class="col">
-    <input type="number" class="form-control" placeholder="age" aria-label="age" name="age" required>
-    </div>
 
-</div>
-<div class="row">
-  <div class="col">
-    <input type="number" class="form-control" placeholder="phone" aria-label="phone" name="phone" required>
-  </div>
-</div>
 
-<div class="row">
-    <div class="col">
-    <input type="text" class="form-control" placeholder="gender" aria-label="gender" name="gender" required>
-    </div>
-</div>
 
-<div class="row">
-  <div class="col">
-    <input type="number" class="form-control" placeholder="PSSN" aria-label="PSSN" name="PSSN" required>
-  </div>
-   
 
-        <input type="submit" value="Submit">
-</div>        
-      </form> 
 
-      {% endblock %}
+
+
+
+
+

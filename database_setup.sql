@@ -1,59 +1,35 @@
 
-CREATE TABLE complaint (
-    id int NOT NULL,
-    email varchar(255) NOT NULL,
-    firstname varchar(255) NOT NULL,
-    lastname varchar(255) NOT NULL,
-    role varchar(255) NOT NULL,
-    ssn varchar(255) NOT NULL,
-    complainttext varchar(3000),
-    PRIMARY KEY (id),
-    FOREIGN KEY (ssn) REFERENCES doctor(ssn),
-    FOREIGN KEY (ssn) REFERENCES nurse(ssn),
-    FOREIGN KEY (ssn) REFERENCES patient(ssn)
+
+-- drop table doctor,room,nurse,patient,equipment,dependent;
+
+CREATE TABLE room (
+    R_NAME VARCHAR(255),
+    R_NUMBER INT,
+    FLOOR_NUMBER INT,
+
+    PRIMARY KEY (R_NUMBER)
 );
 
+CREATE TABLE Doctor(
+    DOC_FNAME VARCHAR(255),
+    DOC_LNAME VARCHAR(255),
+    DOC_ADDRESS VARCHAR(255),
+    DOC_SSN INT,
+    DOC_GENDER VARCHAR(255),
+    DOC_AGE INT,
+    DOC_PHONE INT,
+    DOC_SALARY INT,
 
-
-
-CREATE TABLE Doctor (
-    Fname VARCHAR(255),
-    Lname VARCHAR(255),
-    address VARCHAR(255),
-    DSSN INT,
-    gender VARCHAR(255),
-    age INT,
-    phone INT,
-    Salary INT,
-    RNum INT,
+    DOC_ROOM_NUMBER INT,
 
     username varchar(255) DEFAULT "username",
-    password varchar(255) DEFAULT "password"
- );
+    password varchar(255) DEFAULT "password",
 
-
-
-create table patient(
-	PAT_FNAME varchar(255),
-    PAT_LNAME varchar(255),
-    PAT_SSN int,
-    PAT_AGE int,
-    PAT_PHONE int,
-    PAT_DISEASE varchar(255),
-    PAT_MEDICINE varchar(255),
-    PAT_ADDRESS varchar(255),
-    PATIENT_GENDER varchar(255),
-    NOROOM int,
-    SSN_DOCTOR int,
-    SSN_NURSE int,
-
-    username varchar(255) DEFAULT "username",
-    password varchar(255) DEFAULT "password"
+    PRIMARY KEY (DOC_SSN),
+    FOREIGN KEY (DOC_ROOM_NUMBER) REFERENCES room(R_NUMBER)
 );
 
-
-
-create table nurse(
+CREATE TABLE nurse(
     NUR_SSN int,
     NUR_FNAME varchar(255),
     NUR_LNAME varchar(255),
@@ -62,28 +38,88 @@ create table nurse(
     NUR_ADDRESS varchar(255),
     NUR_GENDER varchar(255),
     NUR_SALARY int,
-    NUR_CARE_R int,
-    NURSE_SUPERVISOR varchar(255), // ??????????????????
+
+    NUR_ROOM_NUMBER int,
+    NUR_DOC_SSN int,
 
     username varchar(255) DEFAULT "username",
-    password varchar(255) DEFAULT "password"
+    password varchar(255) DEFAULT "password",
+
+    PRIMARY KEY (NUR_SSN),
+    FOREIGN KEY (NUR_ROOM_NUMBER) REFERENCES room(R_NUMBER),
+    FOREIGN KEY (NUR_DOC_SSN) REFERENCES doctor(DOC_SSN)
+
+
 );
 
+CREATE TABLE patient(
+	PAT_FNAME varchar(255),
+    PAT_LNAME varchar(255),
+    PAT_SSN int,
+    PAT_AGE int,
+    PAT_PHONE int,
+    PAT_DISEASE varchar(255),
+    PAT_MEDICINE varchar(255),
+    PAT_ADDRESS varchar(255),
+    PAT_GENDER varchar(255),
+
+    PAT_ROOM_NUMBER int,
+    PAT_DOC_SSN int,
+    PAT_NUR_SSN int,
+
+    username varchar(255) DEFAULT "username",
+    password varchar(255) DEFAULT "password",
+
+    PRIMARY KEY (PAT_SSN),
+    FOREIGN KEY (PAT_ROOM_NUMBER) REFERENCES room(R_NUMBER),
+    FOREIGN KEY (PAT_DOC_SSN) REFERENCES doctor(DOC_SSN),
+    FOREIGN KEY (PAT_NUR_SSN) REFERENCES nurse(NUR_SSN)
 
 
-
-CREATE TABLE Equipment (
-    code VARCHAR(255),
-    manufacturer VARCHAR(255),
-    Ename VARCHAR(255),
-    Emodel INT,
-    PSSN INT
 );
+
 CREATE TABLE Dependent (
-    Dname VARCHAR(255),
-    relationship VARCHAR(255),
-    gender VARCHAR(255),
-    age INT,
-    phone INT,
-    PSSN INT
+    DEP_SSN int,
+    DEP_NAME VARCHAR(255),
+    DEP_RELATIONSHIP VARCHAR(255),
+    DEP_GENDER VARCHAR(255),
+    DEP_AGE INT,
+    DEP_PHONE INT,
+
+    DEP_PAT_SSN INT,
+
+    PRIMARY KEY (DEP_SSN),
+    FOREIGN KEY (DEP_PAT_SSN) REFERENCES patient(PAT_SSN)
 );
+
+CREATE TABLE Equipment(
+    EQ_CODE int,
+    EQ_MANUFACTURER VARCHAR(255),
+    EQ_NAME VARCHAR(255),
+    EQ_MODEL VARCHAR(255),
+    EQ_PAT_SSN INT,
+
+    PRIMARY KEY (EQ_CODE),
+    FOREIGN KEY (EQ_PAT_SSN) REFERENCES patient(PAT_SSN)
+);
+
+CREATE TABLE complaint(
+    id int,
+    email varchar(255),
+    firstname varchar(255),
+    lastname varchar(255),
+    role varchar(255),
+    ssn int,
+    complainttext varchar(3000),
+    PRIMARY KEY (id)--,
+  --  FOREIGN KEY (ssn) REFERENCES doctor(DOC_ssn),
+ --   FOREIGN KEY (ssn) REFERENCES nurse(NUR_ssn),
+--    FOREIGN KEY (ssn) REFERENCES patient(PAT_ssn)
+);
+
+
+
+
+
+
+
