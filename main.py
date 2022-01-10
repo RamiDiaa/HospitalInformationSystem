@@ -100,7 +100,7 @@ def signupdoctor():
       Username = request.form['Username']
       Password = request.form['Password']
       print(Fname,Lname,address,age,salary,phone,gender,DSSN,RNum,Username,Password)
-      sql = "INSERT INTO doctor (Fname,Lname,address,age,salary,phone,gender,DSSN,RNum,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      sql = "INSERT INTO doctor (doc_Fname,doc_Lname,doc_address,doc_age,doc_salary,doc_phone,doc_gender,doc_SSN,DOC_ROOM_NUMBER,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
       val = (Fname,Lname,address,age,salary,phone,gender,DSSN,RNum,Username,Password)
       mycursor.execute(sql,val)
       mydb.commit()
@@ -125,13 +125,13 @@ def Signupnurse():
       Username = request.form['Username']
       Password = request.form['Password']
       print(Fname,Lname,address,age,salary,CareRoom,phone,gender,DSSN,NSSN,Username,Password)
-      sql = "INSERT INTO Signupnurse (Fname,Lname,address,age,salary,CareRoom,phone,gender,DSSN,NSSN,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      sql = "INSERT INTO Signupnurse (nur_Fname,nur_Lname,nur_address,nur_age,nur_salary,NUR_ROOM_NUMBER,nur_phone,nur_gender,nur_DOC_SSN,nur_SSN,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
       val = (Fname,Lname,address,age,salary,CareRoom,phone,gender,DSSN,NSSN,Username,Password)
       mycursor.execute(sql,val)
       mydb.commit()
       return render_template('home.html')
    else:
-        return render_template('Signupnurse.html')
+        return render_template('signupnurse.html')
 @app.route('/Signuppatient',methods = ['POST', 'GET'])
 def Signuppatient():
    if request.method == 'POST':
@@ -151,13 +151,13 @@ def Signuppatient():
       Username = request.form['Username']
       Password = request.form['Password']
       print(Fname,Lname,address,age,salary,phone,gender,DSSN,PSSN,RNum,NSSN,Medicine,Disease,Username,Password)
-      sql = "INSERT INTO Signuppatient (Fname,Lname,address,age,salary,phone,gender,DSSN,PSSN,RNum,NSSN,Medicine,Disease,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      sql = "INSERT INTO Signuppatient (pat_Fname,pat_Lname,pat_address,pat_age,pat_salary,pat_phone,pat_gender,pat_doc_SSN,pat_SSN,PAT_ROOM_NUMBER,pat_nur_SSN,pat_Medicine,pat_Disease,Username,Password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
       val = (Fname,Lname,address,age,salary,phone,gender,DSSN,PSSN,RNum,NSSN,Medicine,Disease,Username,Password)
       mycursor.execute(sql,val)
       mydb.commit()
       return render_template('layout.html')
    else:
-        return render_template('Signuppatient.html')
+        return render_template('signuppatient.html')
 
 
 @app.route('/change', methods=['POST', 'GET'])
