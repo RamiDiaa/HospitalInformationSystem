@@ -1,5 +1,10 @@
 from flask import Flask,render_template, request, url_for
 import mysql.connector
+from re import M
+import math
+from datetime import date
+from time import *
+from datetime import datetime
 
 app = Flask("__main__")
 
@@ -16,7 +21,7 @@ mycursor = mydb.cursor()
 username =""
 role=""
 userssn = 0
-
+#############??/////////////////////////////////////////////////////////sign up nurse and patient
 @app.route('/login',methods = ['POST','GET'])
 def login():
     if request.method == "POST":
@@ -37,7 +42,7 @@ def login():
             return render_template("home.html")
 
 
-        mycursor.execute("SELECT dssn FROM doctor WHERE username=%s AND  password=%s ", (user_name, password,))
+        mycursor.execute("SELECT doc_ssn FROM doctor WHERE username=%s AND  password=%s ", (user_name, password,))
         result = mycursor.fetchall()
         if result:
             userssn = result[0]
@@ -155,8 +160,55 @@ def Signuppatient():
         return render_template('Signuppatient.html')
 
 
+@app.route('/change', methods=['POST', 'GET'])
+def change():
 
+    if request.method == "POST":
+        user_name = request.form['username']
+        password = request.form['password']
+        ssn = request.form['DOC_SSN ']
 
+        mycursor.execute("SELECT DOC_SSN  FROM doctor WHERE DOC_SSN =%s "%(ssn))
+        result = mycursor.fetchall()
+        if result:
+            sql = "UPDATE doctor SET password = %s WHERE doc_ssn = %s"
+            val = (password, ssn)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "UPDATE doctor SET username = %s WHERE doc_ssn = %s"
+            val = (user_name, ssn)
+            mycursor.execute(sql, val)
+            mydb.commit()
+
+            return render_template("home.html")
+
+        mycursor.execute("SELECT NUR_SSN FROM nurse WHERE NUR_SSN  =%s "%(ssn))
+        result = mycursor.fetchall()
+        if result:
+            sql = "UPDATE nurse SET password = %s WHERE nur_ssn = %s"
+            val = (password, ssn)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "UPDATE nurse SET username = %s WHERE nur_ssn = %s"
+            val = (user_name,ssn)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            return render_template("home.html")
+
+        mycursor.execute("SELECT PAT_SSN    FROM patient WHERE PAT_SSN   =%s "%(ssn))
+        result = mycursor.fetchall()
+        if result:
+            sql = "UPDATE nurse SET password = %s WHERE pat_ssn = %s"
+            val = (password, ssn)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            sql = "UPDATE nurse SET username = %s WHERE pat_ssn = %s"
+            va1 = (user_name, ssn)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            return render_template("home.html")
+        return render_template("login.html")
+    return render_template("change.html")
 
 
 @app.route('/',methods = ['POST', 'GET'])
@@ -564,6 +616,13 @@ def addpatient():
         val = (pfname, plname,pssn , page, pphone, pdisease, med, address,gender,rno,Docssn,Nurssn)
         mycursor.execute(sql, val)
         mydb.commit()
+
+        currentDate = datetime.today().strftime("%Y-%m-%d")
+        sql = "INSERT INTO visit (V_PAT_SSN, V_STARTDATE) VALUES (%s,%s)"
+        val = (pssn, currentDate)
+        mycursor.execute(sql, val)
+        mydb.commit()
+
         return render_template('home.html')
     else:
         if role != "doctor" and role != "admin" and role != "nurse" and role != "patient":
@@ -635,8 +694,197 @@ def contactus():
         return render_template("contactus.html")
 
 
+@app.route('/statistics', methods=['POST', 'GET'])
+def statistics():
+    if request.method == "GET":
+        doctorCount = 0
+        patientCount = 0
+        nurseCount = 0
+
+        mycursor.execute("SELECT COUNT(DOC_SSN) FROM doctor")
+        result1 = mycursor.fetchall()
+        doctorCount = (result1[0])[0]
+
+        mycursor.execute("SELECT COUNT(PAT_SSN) FROM patient")
+        result2 = mycursor.fetchall()
+        patientCount = (result2[0])[0]
+
+        mycursor.execute("SELECT COUNT(NUR_SSN) FROM nurse")
+        result3 = mycursor.fetchall()
+        nurseCount = (result3[0])[0]
+
+        mem = [doctorCount, nurseCount, patientCount]
+        label = ["No. Of Doctors", "No. of Nurses", "No. of Patients"]
+
+        labels = [
+            'No. Of Doctors', 'No. of Nurses', 'No. of Patients',
+        ]
+
+        values = [
+            doctorCount, nurseCount, patientCount, ]
+
+        colors = [
+            "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
+            "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
+
+        #####
+        mycursor.execute("SELECT V_STARTDATE FROM visit") #SELECT startdate FROM patient changed
+
+        myresult = mycursor.fetchall()
+        list1 = []
+        list2 = []
+        c = 0
+        sum = 0
+        avg = 0
+        for x1 in myresult:
+            print(x1[0])
+            list1.append(x1[0])
+
+        mycursor.execute("SELECT V_ENDDATE FROM visit")
+        myresult2 = mycursor.fetchall()
+        for x2 in myresult2:
+            print(x2[0])
+            list2.append(x2[0])
+
+        print(list1)
+        print(list2)
+        for f, b in zip(list1, list2):
+            d0 = date(f.year, f.month, f.day)
+            print(f.year)
+            print(f.month)
+            print(f.day)
+
+            d1 = date(b.year, b.month, b.day)
+            print(b.year)
+            print(b.month)
+            print(b.day)
+            dd = d1 - d0
+            print(dd)
+            dd = d1 - d0
+            sum = sum + (dd.days)
+            c = c + 1
+
+        if (c != 0):
+            avg = math.ceil(sum / c)
+
+        return render_template("statistics.html", average=avg, chartd=mem, labels=label, max=17000,
+                               set=zip(values, labels, colors))
+    else:
+
+        doctorCount = 0
+        patientCount = 0
+        nurseCount = 0
+
+        mycursor.execute("SELECT COUNT(DOC_SSN) FROM doctor")
+        result1 = mycursor.fetchall()
+        doctorCount = (result1[0])[0]
+
+        mycursor.execute("SELECT COUNT(PAT_SSN) FROM patient")
+        result2 = mycursor.fetchall()
+        patientCount = (result2[0])[0]
+
+        mycursor.execute("SELECT COUNT(NUR_SSN) FROM nurse")
+        result3 = mycursor.fetchall()
+        nurseCount = (result3[0])[0]
+
+        mem = [doctorCount, nurseCount, patientCount]
+        label = ["No. Of Doctors", "No. of Nurses", "No. of Patients"]
+
+        labels = [
+            'No. Of Doctors', 'No. of Nurses', 'No. of Patients',
+        ]
+
+        values = [
+            doctorCount, nurseCount, patientCount, ]
+
+        colors = [
+            "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
+            "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
+
+        ######
+        c1 = 0
+        m = request.form['month']
+        mycursor.execute("SELECT COUNT(v_startdate) FROM visit WHERE MONTH(v_startdate)='%s'" % m)
+
+        myresult3 = mycursor.fetchall()
+        arrivalratecount = (myresult3[0])[0]
+        print(arrivalratecount)
+        mycursor.execute("SELECT V_STARTDATE FROM visit")
+
+        myresult = mycursor.fetchall()
+        list1 = []
+        list2 = []
+        c = 0
+        sum = 0
+        avg = 0
+        for x1 in myresult:
+            print(x1[0])
+            list1.append(x1[0])
+
+        mycursor.execute("SELECT v_enddate FROM visit")
+        myresult2 = mycursor.fetchall()
+        for x2 in myresult2:
+            print(x2[0])
+            list2.append(x2[0])
+
+        print(list1)
+        print(list2)
+        for f, b in zip(list1, list2):
+            d0 = date(f.year, f.month, f.day)
+            print(f.year)
+            print(f.month)
+            print(f.day)
+
+            d1 = date(b.year, b.month, b.day)
+            print(b.year)
+            print(b.month)
+            print(b.day)
+            dd = d1 - d0
+            print(dd)
+            dd = d1 - d0
+
+            sum = sum + (dd.days)
+            c = c + 1
+
+        if (c != 0):
+            avg = math.ceil(sum / c)
+
+        return render_template("statistics.html", average=avg, count=arrivalratecount, Monname=m, chartd=mem,
+                               labels=label, max=17000, set=zip(values, labels, colors))
 
 
 
+@app.route('/endmedication', methods=['POST', 'GET'])
+def endmedication():
+    if request.method == "POST":
+        ro = request.form['patientssnf']
+        re = request.form['enddate']
+        sql = "INSERT INTO endmedication (patssn,enddate) VALUES (%s, %s)"
+        val = (ro, re)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        return render_template('index.html')
+    else:
+        return render_template('endmedication.html')
+
+@app.route('/checkout', methods=['POST', 'GET'])
+def chechout():
+    if request.method == "POST":
+        pat_ssn = request.form['pat_ssn']
+        currentDate = datetime.today().strftime("%Y-%m-%d")
+
+        mycursor.execute("SELECT v_pat_ssn FROM visit WHERE v_pat_ssn=%s ", (pat_ssn,))
+        result = mycursor.fetchall()
+        if result:
+            sql = "update visit set V_ENDDATE = %s WHERE V_PAT_SSN = %s"
+            val = (currentDate, int(pat_ssn))
+            mycursor.execute(sql, val)
+            mydb.commit()
+            return render_template("home.html")
+
+
+        return render_template("addpatient.html")
+
+    return render_template("checkout.html")
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='assets/css/statistics.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+      <title>ICU | View Statistics</title>
+   </head>
+    
+   <body>
+    <div class="page-wrapper">
+        <div class="nav-wrapper">
+        <div class="grad-bar"></div>
+        <nav class="navbar">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/ICU_logo.jpg" alt="Company Logo">
+          <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </nav>
+    </div>
+      <section class="features">
+        <div class="container">
+          <h1>View Statistics</h1>   
+          <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+              <thead>
+                <tr>
+                    <th>{{labels.0}}</th>
+                    <th>{{labels.1}}</th>
+                    <th>{{labels.2}}</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+              <tbody>
+                <tr>
+                <td>{{chartd.0}}</td>
+                <td>{{chartd.1}}</td>
+                <td>{{chartd.2}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <canvas id="chart" width="600" height="400"></canvas>
+    </div>
+  </body>
+
+    <script>
+      $("#search-icon").click(function() {
+      $(".nav").toggleClass("search");
+      $(".nav").toggleClass("no-search");
+      $(".search-input").toggleClass("search-active");
+    });
+
+    $('.menu-toggle').click(function(){
+      $(".nav").toggleClass("mobile-nav");
+      $(this).toggleClass("is-active");
+    });
+    </script>
+    <script>
+        var pieData = [
+        {% for item, label, colors in set %}
+          {
+            value: {{item}},
+            label: "{{label}}",
+            color: "{{colors}}"
+          },
+        {% endfor %}
+      ];
+        
+      // get bar chart canvas
+      var mychart = document.getElementById("chart").getContext("2d");
+      steps = 10
+      max = {{ max }}
+
+      // draw pie chart
+      new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);
+
+    </script>
+    <style>
+        #myHeader {
+          background-color: lightblue;
+          color: black;
+          padding: 40px;
+          text-align: center;
+        } 
+    </style>
+
+    <h1> Enter a month to know the arrival rate per month: </h1>
+    <form class="row g-3", action="http://127.0.0.1:5000/statistics" method="POST">
+        <div class="col-md-5">
+            &nbsp;&nbsp; <label for="inputEmail4" class="form-label">Month:</label>
+            &nbsp; <input type="number" class="form-control" id="inputEmail4" name="month">
+        </div>
+        <br><br>
+        <div class="col-12">
+         &nbsp;&nbsp; <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    <h2 id="myHeader">The average medication time is {{ average }} days <br> The arrival rate is {{count}} per {{Monname}} </h2>
+   </body>
+</html>

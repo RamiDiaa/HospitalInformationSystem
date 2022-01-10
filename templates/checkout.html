@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<form action="http://localhost:5000/checkout" method="POST">
+    <div class="container">
+    <div class="row">
+      <div class="col1">
+        <input type="text" class="form-control" placeholder="patient ssn" aria-label="patient ssn" name="pat_ssn" required>
+      </div>
+
+    
+    <div>
+        
+            <input type="submit" value="checkout">
+    </div>
+    
+          </form> 
+          {% endblock %}

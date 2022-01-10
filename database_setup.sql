@@ -117,6 +117,16 @@ CREATE TABLE complaint(
 --    FOREIGN KEY (ssn) REFERENCES patient(PAT_ssn)
 );
 
+CREATE TABLE visit(
+    V_CODE int AUTO_INCREMENT,
+    V_STARTDATE date,
+    V_ENDDATE date,
+    V_PAT_SSN int,
+    PRIMARY KEY (V_CODE),
+    FOREIGN KEY (V_PAT_SSN) REFERENCES patient(PAT_SSN)
+
+);
+
 
 
 
