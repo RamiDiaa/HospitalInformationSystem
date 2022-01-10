@@ -109,7 +109,7 @@ def signupdoctor():
         return render_template('signupdoctor.html')
 
 
-@app.route('/Signupnurse',methods = ['POST', 'GET'])
+@app.route('/signupnurse',methods = ['POST', 'GET'])
 def Signupnurse():
    if request.method == 'POST':
       Fname = request.form['Fname']
@@ -132,7 +132,7 @@ def Signupnurse():
       return render_template('home.html')
    else:
         return render_template('signupnurse.html')
-@app.route('/Signuppatient',methods = ['POST', 'GET'])
+@app.route('/signuppatient',methods = ['POST', 'GET'])
 def Signuppatient():
    if request.method == 'POST':
       Fname = request.form['Fname']
