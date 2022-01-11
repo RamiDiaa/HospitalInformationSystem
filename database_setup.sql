@@ -112,8 +112,8 @@ CREATE TABLE complaint(
     ssn int,
     complainttext varchar(3000),
     PRIMARY KEY (id)--,
-  --  FOREIGN KEY (ssn) REFERENCES doctor(DOC_ssn),
- --   FOREIGN KEY (ssn) REFERENCES nurse(NUR_ssn),
+--  FOREIGN KEY (ssn) REFERENCES doctor(DOC_ssn),
+--   FOREIGN KEY (ssn) REFERENCES nurse(NUR_ssn),
 --    FOREIGN KEY (ssn) REFERENCES patient(PAT_ssn)
 );
 

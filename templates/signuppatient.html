@@ -1,73 +1,74 @@
 {% extends "layout.html" %}
 {% block body %}
+    <title> SIGNUP-Patient </title>
 
-<form action="http://localhost:5000/signuppatient" method="POST">
-    <div class="container">
-    <div class="row">
-      <div class="col1">
-        <input type="text" class="form-control" placeholder="Fname" aria-label="Fname" name="Fname" required>
+    <h1> &nbsp; &nbsp; &nbsp; &nbsp; <div class="badge bg-primary text-wrap" style="width: 15rem;">
+        Sign up patient</div> 
+    </h1>
+    <br>
+    <form class="row g-3", action="http://127.0.0.1:5000/signuppatient" method="POST">
+        <div class="col-md-5">
+            &nbsp;&nbsp; <label for="inputEmail4" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="inputEmail4" name="Patient First Name">
+        </div>
+        <div class="col-md-5">            <input type="text" class="form-control" id="inputPassword4" name="Patient Last Name">
+        </div>
+        <div class="col-md-3">
+            &nbsp;&nbsp; <label for="inputZip" class="form-label">Patient SSN</label>
+            <input type="number" class="form-control" id="inputZip" name="Pateint SSN">
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Age</label>
+            <input type="number" class="form-control" id="inputZip" name="Patient Age">
+        </div>
+        <div class="col-md-3">
+            <label for="inputState" class="form-label">Gender</label>
+            <select id="inputState" class="form-select" name="Patient Gender">
+              <option selected>Choose...</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="inputZip" name="Patient Phone">
+        </div>
+        <div class="col-12">
+            &nbsp;&nbsp; <label for="inputAddress" class="form-label">Address</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="Patient Address">
+        </div>
+        <div class="col-12">
+            &nbsp;&nbsp; <label for="inputAddress" class="form-label">Patient Disease</label>
+            <input type="text" class="form-control" id="inputAddress" name="Patient Disease">
+        </div>
+        <div class="col-12">
+            &nbsp;&nbsp; <label for="inputAddress" class="form-label">Patient Medicine</label>
+            <input type="text" class="form-control" id="inputAddress" placeholder="Ex:Enalapril.." name="Patient Medicine">
+        </div>
+        <div class="col-md-3">
+            &nbsp;&nbsp; <label for="inputZip" class="form-label">Doctor SSN</label>
+            <input type="number" class="form-control" id="inputZip" name="SSNDoctor">
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Nurse SSN</label>
+            <input type="number" class="form-control" id="inputZip" name="SSNNurse">
+        </div>
+        <div class="col-md-3">
+            <label for="inputZip" class="form-label">Room NO.</label>
+            <input type="number" class="form-control" id="inputZip" name="NORoom">
+        </div>
+        <div class="col-md-5">
+          &nbsp;&nbsp; <label for="inputEmail4" class="form-label">Patient Username</label>
+          <input type="text" class="form-control" id="inputEmail4" name="Username">
       </div>
-      <div class="col2">
-        <input type="text" class="form-control" placeholder="Lname" aria-label="Lname" name="Lname" required>
+      <div class="col-md-5">
+          <label for="inputPassword4" class="form-label">Password</label>
+          <input type="text" class="form-control" id="inputPassword4" name="Password">
       </div>
-      <div class="col3">
-        <input type="text" class="form-control" placeholder="gender" aria-label="gender" name="gender" required>
-    </div>
-    </div>
-    
-    
-    <div class="row">
-        <div class="col1">
-            <input type="number" class="form-control" placeholder="age" aria-label="age" name="age" required>
-        </div>
-      <div class="col2">
-        <input type="text" class="form-control" placeholder="address" aria-label="address" name="address" required>
-      </div>
-      <div class="col3">
-        <input type="number" class="form-control" placeholder="phone" aria-label="phone" name="phone" required>
-      </div>
-    </div>
-
-    <div class="row">
-        <div class="col1">
-          <input type="number" class="form-control" placeholder="DSSN" aria-label="DSSN" name="DSSN" required>
-        </div>
-        <div class="col2">
-            <input type="number" class="form-control" placeholder="PSSN" aria-label="PSSN" name="PSSN" required>
-        </div>
-        <div class="col3">
-            <input type="number" class="form-control" placeholder="NSSN" aria-label="NSSN" name="NSSN" required>
-        </div>
-      </div>
-    
-    <div class="row">
-        <div class="col1">
-            <input type="number" class="form-control" placeholder="RNum" aria-label="RNum" name="RNum" required>
-        </div>
-
-        <div class="col2">
-            <input type="text" class="form-control" placeholder="Disease" aria-label="Disease" name="Disease" required>
-        </div>
-        <div class="col3">
-            <input type="text" class="form-control" placeholder="Medicine" aria-label="Medicine" name="Medicine" required>
-        </div>
-    
-    </div>
-    
-
-    <div class="row">
-        <div class="col1">
-        <input type="text" class="form-control" placeholder="Email address" aria-label="Username" name="Username" required>
-        </div>
-        <div class="col2">
-            <input type="text" class="form-control" placeholder="Password" aria-label="Password" name="Password" required>
-        </div>
-    
-    </div>
-        
-            <input type="submit" value="Submit">
-    </div>
-          </form> 
-        
-          {% endblock %}
-    
+       <br><br>
+       <div class="col-12">
+        &nbsp;&nbsp; &nbsp;  <button type="submit" class="btn btn-primary">Submit</button>
+       </div>
+       
+    </form> 
+{% endblock %}

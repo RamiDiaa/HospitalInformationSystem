@@ -578,6 +578,7 @@ def addeqipment():
 @app.route('/adddependent',methods = ['POST', 'GET'])
 def adddependent():
    if request.method == 'POST':
+      Dssn = request.form['Dssn']
       Dname = request.form['Dname']
       PSSN = request.form['PSSN']
       relationship = request.form['relationship']
@@ -585,8 +586,8 @@ def adddependent():
       phone = request.form['phone']
       gender = request.form['gender']
       print(Dname,relationship,age,phone,gender,PSSN)
-      sql = "INSERT INTO Dependent (DEP_name,DEP_relationship,DEP_age,DEP_phone,DEP_gender,DEP_PAT_SSN) VALUES (%s, %s, %s, %s, %s, %s)"
-      val = (Dname,relationship,age,phone,gender,PSSN)
+      sql = "INSERT INTO Dependent (DEP_SSN,DEP_name,DEP_relationship,DEP_age,DEP_phone,DEP_gender,DEP_PAT_SSN) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+      val = (Dssn,Dname,relationship,age,phone,gender,PSSN)
       mycursor.execute(sql, val)
       mydb.commit()
       return render_template('home.html')
@@ -696,6 +697,8 @@ def contactus():
 
 @app.route('/statistics', methods=['POST', 'GET'])
 def statistics():
+    if role != "admin":
+        return render_template("home.html")
     if request.method == "GET":
         doctorCount = 0
         patientCount = 0
