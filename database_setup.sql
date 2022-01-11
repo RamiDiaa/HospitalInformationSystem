@@ -104,7 +104,7 @@ CREATE TABLE Equipment(
 );
 
 CREATE TABLE complaint(
-    id int,
+    id int AUTO_INCREMENT,
     email varchar(255),
     firstname varchar(255),
     lastname varchar(255),

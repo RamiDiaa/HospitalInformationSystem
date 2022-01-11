@@ -228,17 +228,17 @@ def viewdoctor():
 
     elif (role == "doctor"):
         mycursor.execute(
-            "SELECT DOC_FNAME,DOC_LNAME,DOC_ADDRESS,DOC_GENDER,DOC_AGE,DOC_PHONE,DOC_SALARY,ROOM_NUMBER FROM doctor where DOC_SSN= %s " % (
+            "SELECT DOC_FNAME,DOC_LNAME,DOC_ADDRESS,DOC_GENDER,DOC_AGE,DOC_PHONE,DOC_SALARY,DOC_ROOM_NUMBER FROM doctor where DOC_SSN= %s " % (
             userssn))
 
     elif (role == "nurse"):
         mycursor.execute(
-            "SELECT DOC_FNAME,DOC_LNAME,DOC_GENDER,DOC_PHONE,ROOM_NUMBER FROM doctor JOIN nurse on DOC_SSN=NUR_DOC_SSN where NUR_SSN= %s " % (
+            "SELECT DOC_FNAME,DOC_LNAME,DOC_GENDER,DOC_PHONE,DOC_ROOM_NUMBER FROM doctor JOIN nurse on DOC_SSN=NUR_DOC_SSN where NUR_SSN= %s " % (
             userssn)) # join add
 
     elif (role == "patient"):
         mycursor.execute(
-            "SELECT DOC_FNAME,DOC_LNAME,DOC_GENDER,DOC_PHONE,ROOM_NUMBER FROM doctor JOIN patient on DOC_SSN=PAT_DOC_SSN where PAT_SSN= %s " % (
+            "SELECT DOC_FNAME,DOC_LNAME,DOC_GENDER,DOC_PHONE,DOC_ROOM_NUMBER FROM doctor JOIN patient on DOC_SSN=PAT_DOC_SSN where PAT_SSN= %s " % (
             userssn)) #DOC_SSN changed to PAT_SSN
 
     row_headers = [x[0] for x in mycursor.description]
@@ -261,17 +261,17 @@ def viewnurse():
 
     elif (role == "doctor"):
         mycursor.execute(
-            "SELECT NUR_FNAME,NUR_LNAME,NUR_ADRESS,NUR_GENDER,NUR_PHONE,NUR_CARE_R FROM nurse where NUR_DOC_SSN= %s " % (
+            "SELECT NUR_FNAME,NUR_LNAME,NUR_ADDRESS,NUR_GENDER,NUR_PHONE,NUR_Room_number FROM nurse where NUR_DOC_SSN= %s " % (
             userssn)) # ,NUR_AGE,NUR_SALARY removed
 
     elif (role == "nurse"):
         mycursor.execute(
-            "SELECT NUR_FNAME,NUR_LNAME,NUR_ADRESS,NUR_GENDER,NUR_AGE,NUR_PHONE,NUR_SALARY,NUR_CARE_R FROM doctor JOIN nurse on DOC_SSN=NUR_DOC_SSN where NUR_SSN= %s " % (
+            "SELECT NUR_FNAME,NUR_LNAME,NUR_ADRESS,NUR_GENDER,NUR_AGE,NUR_PHONE,NUR_SALARY,NUR_Room_number FROM doctor JOIN nurse on DOC_SSN=NUR_DOC_SSN where NUR_SSN= %s " % (
             userssn)) # no need for join here
 
     elif (role == "patient"):
         mycursor.execute(
-            "SELECT NUR_FNAME,NUR_LNAME,NUR_GENDER,NUR_PHONE,NUR_CARE_R FROM nurse JOIN patient on NUR_SSN = PAT_NUR_SSN where PAT_SSN= %s " % (
+            "SELECT NUR_FNAME,NUR_LNAME,NUR_GENDER,NUR_PHONE,NUR_Room_number FROM nurse JOIN patient on NUR_SSN = PAT_NUR_SSN where PAT_SSN= %s " % (
             userssn))
     row_headers = [x[0] for x in mycursor.description]
     myresult = mycursor.fetchall()
@@ -329,7 +329,7 @@ def viewpatient():
 
     elif (role == "nurse"):
         mycursor.execute(
-            "SELECT PAR_FNAME,PAR_LNAME,PAT_DISEASE,PAT_GENDER,PAT_AGE,PAT_PHONE,PAT_MEDICINE FROM nurse JOIN patient on NUR_SSN=PAT_NUR_SSN where PAT_SSN= %s " % (
+            "SELECT PAT_FNAME,PAT_LNAME,PAT_DISEASE,PAT_GENDER,PAT_AGE,PAT_PHONE,PAT_MEDICINE FROM nurse JOIN patient on NUR_SSN=PAT_NUR_SSN where PAT_SSN= %s " % (
             userssn))
 
     elif (role == "patient"):
@@ -690,7 +690,7 @@ def contactus():
         mycursor.execute(sql)
         mydb.commit()
         print(mydb)
-        return render_template("layout.html")
+        return render_template("home.html")
     else:
         return render_template("contactus.html")
 
@@ -890,4 +890,4 @@ def chechout():
 
     return render_template("checkout.html")
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
